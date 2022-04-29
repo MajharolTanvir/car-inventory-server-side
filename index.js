@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors')
 require('dotenv').config()
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // middlewear
 app.use(cors())
@@ -20,9 +20,17 @@ async function run() {
         
         app.get('/inventory', async (req, res) => {
             const query = req.query;
-            const cursor = carCollection.findOne(query)
-            const cars = await cursor
+            const cursor = carCollection.find(query)
+            const cars = await cursor.toArray()
             res.send(cars)
+        })
+
+        // Delete option
+        app.delete('/inventory/:id', (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            const cursor = carCollection.deleteOne(filter);
+            res.send(cursor);
         })
     }
     finally {
@@ -30,10 +38,6 @@ async function run() {
     }
 }
 run().catch(console.dir)
-
-
-
-
 
 app.get('/', (req, res) => {
     res.send('hello dear work smoothly')
