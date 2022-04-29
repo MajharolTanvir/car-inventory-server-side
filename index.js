@@ -34,6 +34,19 @@ async function run() {
             res.send(car)
         })
 
+        // Put?Update your data .
+        app.put('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: req.body,
+            };
+            const result = await carCollection.updateOne(filter, updateDoc, options);
+            console.log(result);
+            res.send(result);
+        })
+
         // Delete this item
         app.delete('/inventory/:id', (req, res) => {
             const id = req.params.id;
