@@ -20,6 +20,7 @@ async function run() {
         
         // get all data
         // http://localhost:5000/inventorys
+        // https://car-inventory-bd.herokuapp.com/inventorys
         app.get('/inventorys', async (req, res) => {
             const query = req.query;
             const cursor = carCollection.find(query)
@@ -28,6 +29,7 @@ async function run() {
         })
 
         // post new data
+        // https://car-inventory-bd.herokuapp.com/inventory
         app.post('/inventory', async (req, res) => {
             const newCar = req.body;
             const car = carCollection.insertOne(newCar)
@@ -35,6 +37,7 @@ async function run() {
         })
 
         // Put?Update your data .
+        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
@@ -48,6 +51,7 @@ async function run() {
         })
 
         // Delete this item
+        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
         app.delete('/inventory/:id', (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
