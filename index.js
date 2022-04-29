@@ -6,8 +6,8 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // middlewear
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.m6yuv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -18,14 +18,23 @@ async function run() {
         await client.connect();
         const carCollection = client.db('car-inventory').collection('car-data')
         
-        app.get('/inventory', async (req, res) => {
+        // get all data
+        // http://localhost:5000/inventorys
+        app.get('/inventorys', async (req, res) => {
             const query = req.query;
             const cursor = carCollection.find(query)
             const cars = await cursor.toArray()
             res.send(cars)
         })
 
-        // Delete option
+        // post new data
+        app.post('/inventory', async (req, res) => {
+            const newCar = req.body;
+            const car = carCollection.insertOne(newCar)
+            res.send(car)
+        })
+
+        // Delete this item
         app.delete('/inventory/:id', (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
