@@ -28,6 +28,14 @@ async function run() {
             res.send(cars)
         })
 
+        // get single data
+        app.get('/inventory/:id', async (req, res) => {
+            const query = req.query;
+            const cursor = carCollection.findOne(query)
+            const cars = await cursor
+            res.send(cars)
+        })
+
         // post new data
         // https://car-inventory-bd.herokuapp.com/inventory
         app.post('/inventory', async (req, res) => {
