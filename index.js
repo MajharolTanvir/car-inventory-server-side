@@ -49,10 +49,14 @@ async function run() {
         // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;
+            const data = req.body;
+            console.log(data);
             const filter = { _id: ObjectId(id) }
             const options = { upsert: true };
             const updateDoc = {
-                $set: req.body,
+                $set: {
+                    quantity: data.quantity
+                }
             };
             const result = await carCollection.updateOne(filter, updateDoc, options);
             console.log(result);
