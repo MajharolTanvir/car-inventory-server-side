@@ -39,7 +39,7 @@ async function run() {
 
         // post new data
         // https://car-inventory-bd.herokuapp.com/inventory
-        app.post('/inventory', async (req, res) => {
+        app.post('/inventorys', async (req, res) => {
             const newCar = req.body;
             const car = carCollection.insertOne(newCar)
             res.send(car)
