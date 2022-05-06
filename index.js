@@ -50,18 +50,17 @@ async function run() {
         // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;
-            const data = req.body;
-            console.log(data);
+            const updateStock = req.body;
+            console.log(updateStock);
             const filter = { _id: ObjectId(id) }
-            const options = { upsert: true };
             const updateDoc = {
                 $set: {
-                    quantity: data.quantity
-                }
+                    quantity: updateStock.updateQuantity,
+                },
             };
-            const result = await carCollection.updateOne(filter, updateDoc, options);
-            console.log(result);
+            const result = await carCollection.updateMany(filter, updateDoc);
             res.send(result);
+            console.log(result);
         })
 
         // Delete this item
