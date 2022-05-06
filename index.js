@@ -41,8 +41,9 @@ async function run() {
         // https://car-inventory-bd.herokuapp.com/inventory
         app.post('/inventorys', async (req, res) => {
             const newCar = req.body;
-            const car = carCollection.insertOne(newCar)
-            res.send(car)
+            console.log(newCar);
+            const car = await carCollection.insertOne(newCar)
+            res.send(car);
         })
 
         // Put?Update your data .
