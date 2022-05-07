@@ -46,6 +46,34 @@ async function run() {
             res.send(cars)
         })
 
+
+        // Put?Update your data .
+        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
+        app.put('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateStock = req.body;
+            console.log(updateStock);
+            const filter = { _id: ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    quantity: updateStock.updateQuantity,
+                },
+            };
+            const result = await carCollection.updateMany(filter, updateDoc);
+            res.send(result);
+            console.log(result);
+        })
+
+        // Delete this item
+        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
+        app.delete('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            const cursor = await carCollection.deleteOne(filter);
+            res.send(cursor);
+        })
+
+
         // post new data
         // https://car-inventory-bd.herokuapp.com/inventory
         app.post('/inventorys', async (req, res) => {
@@ -72,26 +100,9 @@ async function run() {
             res.send(cars)
         })
 
-        // Put?Update your data .
-        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
-        app.put('/inventory/:id', async (req, res) => {
-            const id = req.params.id;
-            const updateStock = req.body;
-            console.log(updateStock);
-            const filter = { _id: ObjectId(id) }
-            const updateDoc = {
-                $set: {
-                    quantity: updateStock.updateQuantity,
-                },
-            };
-            const result = await carCollection.updateMany(filter, updateDoc);
-            res.send(result);
-            console.log(result);
-        })
-
-        // Delete this item
-        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
-        app.delete('/inventory/:id', async (req, res) => {
+        //delete new data 
+        // https://car-inventory-bd.herokuapp.com/myItems/id=${id}
+        app.delete('/myItems/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
             const cursor = await carCollection.deleteOne(filter);
