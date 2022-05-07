@@ -5,7 +5,7 @@ require('dotenv').config()
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
-// middlewear
+// middle wear
 app.use(cors());
 app.use(express.json());
 
@@ -62,12 +62,13 @@ async function run() {
             const car = await newCollection.insertOne(newCar)
             res.send(car);
         })
-        app.get('/myItems', async (req, res) => {
-            const query = req.query.email;
-            const cursor = newCollection.find(query)
-            const cars = await cursor.toArray()
-            res.send(cars)
-        })
+        // app.get('/myItems', async (req, res) => {
+        //     const query = req.query.name;
+        //     console.log(query);
+        //     const cursor = newCollection.find(query)
+        //     const cars = await cursor.toArray()
+        //     res.send(cars)
+        // })
 
         // Put?Update your data .
         // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
