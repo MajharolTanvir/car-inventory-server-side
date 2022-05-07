@@ -62,9 +62,10 @@ async function run() {
             const car = await newCollection.insertOne(newCar)
             res.send(car);
         })
+
+        // get new data with single user
         app.get('/myItems', async (req, res) => {
             const query = req.query.name;
-            console.log(query);
             const cursor = newCollection.find(query)
             const cars = await cursor.toArray()
             res.send(cars)
