@@ -62,6 +62,12 @@ async function run() {
             const car = await newCollection.insertOne(newCar)
             res.send(car);
         })
+        app.get('/myItems', async (req, res) => {
+            const query = req.query;
+            const cursor = newCollection.find(query)
+            const cars = await cursor.toArray()
+            res.send(cars)
+        })
 
         // Put?Update your data .
         // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
