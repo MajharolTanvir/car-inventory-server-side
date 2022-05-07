@@ -17,6 +17,7 @@ async function run() {
     try {
         await client.connect();
         const carCollection = client.db('car-inventory').collection('car-data')
+        const newCollection = client.db('car-inventory').collection('new-car-data')
         
         // get all data
         // https://car-inventory-bd.herokuapp.com/inventorys
@@ -53,7 +54,14 @@ async function run() {
             const car = await carCollection.insertOne(newCar)
             res.send(car);
         })
-
+        // post new data with user
+        // https://car-inventory-bd.herokuapp.com/inventory
+        app.post('/myItems', async (req, res) => {
+            const newCar = req.body;
+            console.log(newCar);
+            const car = await newCollection.insertOne(newCar)
+            res.send(car);
+        })
 
         // Put?Update your data .
         // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
