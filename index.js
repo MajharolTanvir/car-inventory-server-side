@@ -65,7 +65,8 @@ async function run() {
 
         // get new data with single user
         app.get('/myItems', async (req, res) => {
-            const query = req.query.name;
+            const email = req.query.email
+            const query = { email: email };
             const cursor = newCollection.find(query)
             const cars = await cursor.toArray()
             res.send(cars)
