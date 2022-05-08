@@ -105,9 +105,12 @@ async function run() {
         app.delete('/myItems/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
-            const cursor = await carCollection.deleteOne(filter);
+            const cursor = await carCollection.deleteMany(filter);
+            console.log(cursor);
             res.send(cursor);
         })
+
+
     }
     finally {
         // await client.close();
