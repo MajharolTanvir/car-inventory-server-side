@@ -89,6 +89,31 @@ async function run() {
             const cars = await cursor.toArray()
             res.send(cars)
         })
+        // get single data
+        app.get('/myItems/:id', async (req, res) => {
+            const query = req.params.id;
+            const filter = { _id: ObjectId(query) }
+            const cursor = newCollection.findOne(filter)
+            const cars = await cursor
+            res.send(cars)
+        })
+
+        // Put?Update your data .
+        // https://car-inventory-bd.herokuapp.com/myItems/id=${id}
+        app.put('/myItems/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateStock = req.body;
+            const filter = { _id: ObjectId(id) }
+            console.log(filter);
+            const updateDoc = {
+                $set: {
+                    quantity: updateStock.updateQuantity,
+                },
+            };
+            console.log(updateDoc);
+            const result = await newCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        })
 
         //delete new data 
         // https://car-inventory-bd.herokuapp.com/myItems/id=${id}
@@ -96,7 +121,6 @@ async function run() {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
             const cursor = await newCollection.deleteOne(filter);
-            console.log(cursor);
             res.send(cursor);
         })
 
