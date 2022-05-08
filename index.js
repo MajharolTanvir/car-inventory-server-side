@@ -55,7 +55,7 @@ async function run() {
         })
 
         // Delete this item
-        // https://car-inventory-bd.herokuapp.com/inventory/id=${id}
+        // https://car-inventory-bd.herokuapp.com/inventory/${id}
         app.delete('/inventory/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
@@ -95,7 +95,7 @@ async function run() {
         app.delete('/myItems/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
-            const cursor = await carCollection.deleteOne(filter);
+            const cursor = await newCollection.deleteOne(filter);
             console.log(cursor);
             res.send(cursor);
         })
