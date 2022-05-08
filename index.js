@@ -28,14 +28,6 @@ async function run() {
             res.send(cars)
         })
 
-        // get myProducts
-        app.get('/myProducts?email=', async (req, res) => {
-            const query = req.query;
-            const cursor = carCollection.find(query)
-            const cars = await cursor.toArray()
-            res.send(cars)
-        })
-
 
         // get single data
         app.get('/inventory/:id', async (req, res) => {
@@ -52,7 +44,6 @@ async function run() {
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;
             const updateStock = req.body;
-            console.log(updateStock);
             const filter = { _id: ObjectId(id) }
             const updateDoc = {
                 $set: {
@@ -61,7 +52,6 @@ async function run() {
             };
             const result = await carCollection.updateMany(filter, updateDoc);
             res.send(result);
-            console.log(result);
         })
 
         // Delete this item
@@ -105,7 +95,7 @@ async function run() {
         app.delete('/myItems/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
-            const cursor = await carCollection.deleteMany(filter);
+            const cursor = await carCollection.deleteOne(filter);
             console.log(cursor);
             res.send(cursor);
         })
